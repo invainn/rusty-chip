@@ -193,7 +193,6 @@ impl CPU {
             self.delay_timer -= 1;
         }
 
-        // Not relevant right now
         if self.sound_timer > 0 {
             self.sound_timer -= 1;
         }
@@ -529,8 +528,11 @@ impl CPU {
         self.pc += 2;
     }
 
-    // TODO: implement sound
     fn oc_fx18(&mut self) {
+        let x = ((self.opcode & 0x0F00) >> 8) as usize;
+
+        self.sound_timer = self.v[x];
+
         self.pc += 2;
     }
 

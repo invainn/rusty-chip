@@ -1,11 +1,13 @@
 mod cpu;
 mod input;
+mod audio;
 mod display;
 
 use std::thread;
 use std::time::Duration;
 
 use cpu::CPU;
+use audio::Audio;
 use display::Display;
 use input::Keypad;
 
@@ -16,6 +18,7 @@ fn main() {
     let sdl_context = sdl2::init().unwrap();
 
     let mut disp = Display::new(&sdl_context);
+    let sound = Audio::new(&sdl_context);
     let mut keypad = Keypad::new(&sdl_context);
 
     let args: Vec<String> = env::args().collect();
@@ -36,6 +39,12 @@ fn main() {
         if cpu.draw_flag {
             disp.draw(&cpu.gfx);
             cpu.draw_flag = false;
+        }
+
+        if cpu.sound_timer > 0 {
+            sound.play();
+        } else {
+            sound.stop();
         }
 
         // Decrement the timer after 60hz is up
