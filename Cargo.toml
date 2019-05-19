@@ -1,0 +1,13 @@
+[package]
+name = "chip8"
+version = "0.1.0"
+authors = ["Anthony J Bennett <anthonybennett@nevada.unr.edu>"]
+edition = "2018"
+
+[dependencies]
+rand = "0.3.15"
+
+[dependencies.sdl2]
+version = "0.30"
+default-features = false
+features = ["gfx"]
